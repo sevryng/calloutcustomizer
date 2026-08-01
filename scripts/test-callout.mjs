@@ -23,6 +23,7 @@ await esbuild.build({
 			"export * from './src/utils/callout';",
 			"export * from './src/utils/colors';",
 			"export * from './src/utils/styles';",
+			"export * from './src/utils/dedupe';",
 		].join('\n'),
 		resolveDir: process.cwd(),
 		loader: 'ts',
@@ -46,6 +47,7 @@ const {
 	hexToRgbTriplet,
 	cssColorToHex,
 	StyleManager,
+	dedupeById,
 } = await import(pathToFileURL(outFile).href);
 
 let passed = 0;
@@ -292,6 +294,25 @@ check('StyleManager.unload removes the style element from head', () => {
 	manager.load({ names: [], customSvg: new Map() }, []);
 	manager.unload();
 	assert.equal(activeDocument.head.children.length, 0);
+});
+
+/* ---------- dedupe ---------- */
+
+check('dedupeById drops earlier duplicates, keeping the last write', () => {
+	const result = dedupeById([
+		{ id: 'test-3', name: 'test 3 (old)' },
+		{ id: 'test', name: 'test' },
+		{ id: 'test-3', name: 'test 3 (new)' },
+	]);
+	assert.deepEqual(result, [
+		{ id: 'test-3', name: 'test 3 (new)' },
+		{ id: 'test', name: 'test' },
+	]);
+});
+
+check('dedupeById leaves an array with no duplicates unchanged', () => {
+	const items = [{ id: 'a' }, { id: 'b' }];
+	assert.deepEqual(dedupeById(items), items);
 });
 
 rmSync(outDir, { recursive: true, force: true });

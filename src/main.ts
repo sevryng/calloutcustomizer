@@ -15,6 +15,7 @@ import { IconIndex } from './utils/icons';
 import { StyleManager } from './utils/styles';
 import { SnippetWriter } from './utils/snippet';
 import { slugify } from './utils/svg';
+import { dedupeById } from './utils/dedupe';
 import type {
 	CalloutPreset,
 	CategoryOverride,
@@ -72,6 +73,12 @@ export default class CalloutCustomizer extends Plugin {
 			DEFAULT_SETTINGS,
 			(await this.loadData()) as Partial<CalloutCustomizerSettings>,
 		);
+
+		// Duplicate ids shouldn't occur through normal use (saveLook already
+		// dedupes), but data.json is external state - an old build, a manual
+		// edit, or a sync merge conflict could still leave one behind, and
+		// the context menu renders every entry it finds.
+		this.settings.customTypes = dedupeById(this.settings.customTypes);
 	}
 
 	async saveSettings(): Promise<void> {
