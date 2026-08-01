@@ -29,7 +29,7 @@
 		"url": "https://github.com/sevryng/calloutcustomizer/issues"
 	},
 	"homepage": "https://github.com/sevryng/calloutcustomizer#readme",
-	"funding": "https://buymeacoffee.com/sevryn",
+	"funding": "https://ko-fi.com/sevryn",
 	"devDependencies": {
 		"@eslint/js": "^9.39.4",
 		"@types/node": "^22.15.17",

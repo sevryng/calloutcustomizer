@@ -284,9 +284,7 @@ Expect a reviewer to ask about the `app.customCss` call and the context-menu int
 
 ## Support
 
-If this is useful to you: 
-[buymeacoffee.com/sevryn](https://buymeacoffee.com/sevryn).
-https://ko-fi.com/sevryn
+If this is useful to you: [ko-fi.com/sevryn](https://ko-fi.com/sevryn).
 
 ## Credits
 
