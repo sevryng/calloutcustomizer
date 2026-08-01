@@ -9,9 +9,10 @@
  * remembered in settings so they exist on the next start.
  *
  * These rules cannot live in styles.css: they depend on which icons the running
- * Obsidian build ships and on colours the user picks at runtime. A constructable
- * stylesheet is used rather than an injected <style> element, which plugin
- * guidelines disallow.
+ * Obsidian build ships and on colours the user picks at runtime, so they are
+ * written to an injected <style> element instead. A constructable stylesheet
+ * was tried in its place and shipped in 1.0.0/1.0.1, but it broke plugin load
+ * entirely; reverting to a <style> element fixed it in 1.0.2. Keep it this way.
  */
 
 import type { IconIndex } from './icons';
