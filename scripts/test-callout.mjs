@@ -1,5 +1,6 @@
 /**
- * Round-trip tests for the callout parser and colour helpers.
+ * Round-trip tests for the callout parser, colour helpers, and stylesheet
+ * manager.
  *
  * These modules are pure (no `obsidian` imports), so they can be bundled and
  * run under plain node:  npm test
@@ -21,6 +22,7 @@ await esbuild.build({
 		contents: [
 			"export * from './src/utils/callout';",
 			"export * from './src/utils/colors';",
+			"export * from './src/utils/styles';",
 		].join('\n'),
 		resolveDir: process.cwd(),
 		loader: 'ts',
@@ -43,6 +45,7 @@ const {
 	hexToCssColor,
 	hexToRgbTriplet,
 	cssColorToHex,
+	StyleManager,
 } = await import(pathToFileURL(outFile).href);
 
 let passed = 0;
@@ -224,6 +227,71 @@ check('default icons resolve', () => {
 	assert.equal(defaultIconFor('note'), 'pencil');
 	assert.equal(defaultIconFor('WARNING'), 'alert-triangle');
 	assert.equal(defaultIconFor('totally-unknown'), 'pencil');
+});
+
+/* ---------- stylesheet manager ---------- */
+
+/** Minimal `document`-shaped stub: a head that tracks appended elements. */
+function makeDocStub() {
+	const head = {
+		children: [],
+		appendChild(el) {
+			head.children.push(el);
+		},
+	};
+
+	function createElement() {
+		const el = { id: '', textContent: '' };
+		el.remove = () => {
+			const index = head.children.indexOf(el);
+			if (index >= 0) head.children.splice(index, 1);
+		};
+		return el;
+	}
+
+	return { head, createElement };
+}
+
+check('StyleManager.load appends exactly one style element to head', () => {
+	globalThis.activeDocument = makeDocStub();
+	const manager = new StyleManager();
+	manager.load({ names: ['star', 'bug'], customSvg: new Map() }, []);
+	assert.equal(activeDocument.head.children.length, 1);
+	assert.equal(activeDocument.head.children[0].id, 'callout-customizer-styles');
+});
+
+check('StyleManager.load writes an icon rule for each icon name', () => {
+	globalThis.activeDocument = makeDocStub();
+	const manager = new StyleManager();
+	manager.load({ names: ['star', 'bug'], customSvg: new Map() }, []);
+	const css = activeDocument.head.children[0].textContent;
+	assert.match(css, /\[data-callout-metadata~="i:star"\]\{--callout-icon:lucide-star;\}/);
+	assert.match(css, /\[data-callout-metadata~="i:bug"\]\{--callout-icon:lucide-bug;\}/);
+});
+
+check('StyleManager.load writes a colour rule for each known colour', () => {
+	globalThis.activeDocument = makeDocStub();
+	const manager = new StyleManager();
+	manager.load({ names: [], customSvg: new Map() }, ['e07b39']);
+	const css = activeDocument.head.children[0].textContent;
+	assert.match(css, /\[data-callout-metadata~="c:e07b39"\]\{--callout-color:#e07b39;\}/);
+});
+
+check('StyleManager.registerColor adds a new rule once and reports duplicates', () => {
+	globalThis.activeDocument = makeDocStub();
+	const manager = new StyleManager();
+	manager.load({ names: [], customSvg: new Map() }, []);
+	assert.equal(manager.registerColor('ff0000'), true);
+	assert.equal(manager.registerColor('ff0000'), false);
+	assert.match(activeDocument.head.children[0].textContent, /c:ff0000/);
+});
+
+check('StyleManager.unload removes the style element from head', () => {
+	globalThis.activeDocument = makeDocStub();
+	const manager = new StyleManager();
+	manager.load({ names: [], customSvg: new Map() }, []);
+	manager.unload();
+	assert.equal(activeDocument.head.children.length, 0);
 });
 
 rmSync(outDir, { recursive: true, force: true });
