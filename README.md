@@ -59,7 +59,8 @@ The source for these is in [`docs/showcase.md`](docs/showcase.md), and the examp
 
 ### From the community plugin list
 
-Not yet listed. Until then, use one of the methods below.
+**Settings → Community plugins → Browse**, search for **Callout Customizer**, and install.
+It's also viewable at [obsidian.md/plugins?id=callout-customizer](https://obsidian.md/plugins?id=callout-customizer).
 
 ### With BRAT
 
@@ -275,6 +276,8 @@ Pushing a tag triggers `.github/workflows/release.yml`, which builds the plugin,
 Tags must be the exact version with no leading `v`; `.npmrc` sets `tag-version-prefix=""` to enforce this.
 
 ## Submitting to the community plugin list
+
+Already listed - see [Installing](#installing). Kept here for reference:
 
 1. Read the [plugin guidelines](https://docs.obsidian.md/Plugins/Releasing/Plugin+guidelines).
 2. Publish an initial release.
