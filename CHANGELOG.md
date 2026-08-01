@@ -7,6 +7,17 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.0.5] - 2026-08-01
+
+### Fixed
+
+- A callout's icon no longer stays stale after customizing it. Live Preview's
+  callout widget only fully rebuilds on a type change, so an icon/colour-only
+  edit just patched `data-callout-metadata` in place - the colour updated
+  reactively via CSS, but the icon glyph (drawn by Obsidian's own JS) didn't
+  redraw until the callout was edited again. The plugin now finds the live
+  DOM node right after writing the edit and redraws it directly.
+
 ## [1.0.4] - 2026-08-01
 
 ### Fixed
@@ -78,7 +89,8 @@ Initial release.
   so they travel with the file and survive sync and export.
 - Metadata tokens the plugin does not own are preserved unchanged.
 
-[Unreleased]: ../../compare/1.0.4...HEAD
+[Unreleased]: ../../compare/1.0.5...HEAD
+[1.0.5]: ../../compare/1.0.4...1.0.5
 [1.0.4]: ../../compare/1.0.3...1.0.4
 [1.0.3]: ../../compare/1.0.2...1.0.3
 [1.0.2]: ../../compare/1.0.1...1.0.2
