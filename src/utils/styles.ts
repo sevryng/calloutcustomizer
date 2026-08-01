@@ -7,16 +7,19 @@
  * consumed by `var()` at paint time, so a rule added later applies to callouts
  * that are already on screen. Those are therefore generated on demand and
  * remembered in settings so they exist on the next start.
+ *
+ * These rules cannot live in styles.css: they depend on which icons the running
+ * Obsidian build ships and on colours the user picks at runtime. A constructable
+ * stylesheet is used rather than an injected <style> element, which plugin
+ * guidelines disallow.
  */
 
 import type { IconIndex } from './icons';
 import { hexToCssColor, normalizeHex } from './colors';
 import { svgToCssValue } from './svg';
 
-const STYLE_EL_ID = 'callout-customizer-styles';
-
 export class StyleManager {
-	private styleEl: HTMLStyleElement | null = null;
+	private sheet: CSSStyleSheet | null = null;
 	private baseRules = '';
 	private colorRules = new Map<string, string>();
 
@@ -28,12 +31,13 @@ export class StyleManager {
 	 * @param knownColors colours persisted from a previous session
 	 */
 	load(icons: IconIndex, knownColors: readonly string[]): void {
-		const existing = activeDocument.getElementById(STYLE_EL_ID);
-		if (existing) existing.remove();
+		this.detach();
 
-		const styleEl = activeDocument.head.createEl('style');
-		styleEl.id = STYLE_EL_ID;
-		this.styleEl = styleEl;
+		this.sheet = new CSSStyleSheet();
+		activeDocument.adoptedStyleSheets = [
+			...activeDocument.adoptedStyleSheets,
+			this.sheet,
+		];
 
 		this.baseRules = icons.names
 			.map((name) => {
@@ -50,9 +54,18 @@ export class StyleManager {
 	}
 
 	unload(): void {
-		this.styleEl?.remove();
-		this.styleEl = null;
+		this.detach();
 		this.colorRules.clear();
+	}
+
+	private detach(): void {
+		if (!this.sheet) return;
+
+		const sheet = this.sheet;
+		activeDocument.adoptedStyleSheets = activeDocument.adoptedStyleSheets.filter(
+			(candidate) => candidate !== sheet,
+		);
+		this.sheet = null;
 	}
 
 	/**
@@ -77,8 +90,8 @@ export class StyleManager {
 	}
 
 	private flush(): void {
-		if (!this.styleEl) return;
-		this.styleEl.setText(
+		if (!this.sheet) return;
+		this.sheet.replaceSync(
 			[this.baseRules, ...this.colorRules.values()].join('\n'),
 		);
 	}
