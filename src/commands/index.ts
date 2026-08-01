@@ -9,12 +9,13 @@ import type { FoldState } from '../types';
 
 const FOLD_CYCLE: readonly FoldState[] = ['', '+', '-'];
 
-const NOT_IN_CALLOUT = 'Cursor is not inside a callout.';
+const NOT_IN_CALLOUT = 'No callout found here.';
 
 export function registerCommands(plugin: CalloutCustomizer): void {
 	plugin.addCommand({
+		// IDs are stable API - only the display names changed.
 		id: 'customize-callout-at-cursor',
-		name: 'Customize callout at cursor',
+		name: 'Customize current callout',
 		editorCallback: (editor: Editor) => {
 			const found = plugin.calloutService.findAtCursor(editor);
 			if (!found) {
@@ -47,7 +48,7 @@ export function registerCommands(plugin: CalloutCustomizer): void {
 
 	plugin.addCommand({
 		id: 'clear-callout-customization',
-		name: 'Remove customization from callout at cursor',
+		name: 'Remove customization from current callout',
 		editorCallback: (editor: Editor) => {
 			const found = plugin.calloutService.findAtCursor(editor);
 			if (!found) {

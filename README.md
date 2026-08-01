@@ -92,9 +92,9 @@ In the dialog, double-clicking an icon applies it and closes in one gesture.
 
 Assign hotkeys under **Settings → Hotkeys**:
 
-- Customize callout at cursor
+- Customize current callout
 - Cycle callout fold state
-- Remove customization from callout at cursor
+- Remove customization from current callout
 
 ## How customizations are stored
 
@@ -194,6 +194,7 @@ The snippet is regenerated whenever a custom type changes, so don't hand-edit it
 - **Obsidian has two different callout context menus.** The rendered-callout menu in Live Preview is built internally and fires no public event, so this plugin intercepts that right-click and rebuilds the menu as a superset: Obsidian's own **Edit** and **Callout type**, plus its own items. It bails out and leaves the native menu alone outside an editor, in Reading view, or when text is selected. This is the part most likely to need attention after a major Obsidian update; turning off the right-click setting disables it entirely.
 - **Icon categories are derived, not official.** Lucide publishes `categories.json` only in its GitHub repository, not to npm, so the bundled grouping is derived from each icon's official tag metadata. To use the real grouping, save Lucide's `categories.json` as `lucide-categories.json` inside the plugin folder and reload. Both `{ icon: [categories] }` and `{ category: [icons] }` shapes are accepted.
 - **One internal API is used.** Enabling the CSS snippet for you calls `app.customCss`, which is not part of the public API. If it is unavailable the plugin shows a notice telling you to enable the snippet by hand; nothing else depends on it.
+- **Settings are not declarative yet.** Obsidian 1.13 added `getSettingDefinitions()`, which makes a plugin's settings searchable from the settings pane. It is not adopted here because `minAppVersion` is 1.5.0 and the API is absent from the 1.12 type definitions, so using it would mean untyped casts and version gating. Worth revisiting once 1.13 is the realistic floor.
 
 ## Development
 
