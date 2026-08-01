@@ -31,6 +31,7 @@ interface ClickContext {
 interface EditorViewLike {
 	posAtDOM?: (node: Node) => number;
 	posAtCoords?: (coords: { x: number; y: number }) => number | null;
+	domAtPos?: (pos: number) => { node: Node; offset: number } | null;
 }
 
 export class CalloutService {
@@ -94,6 +95,31 @@ export class CalloutService {
 		if (state.icon) void this.plugin.rememberIcon(state.icon);
 
 		editor.setLine(line, serializeCalloutLine(state));
+		editor.focus();
+
+		this.refreshRenderedCallout(editor, line);
+	}
+
+	/**
+	 * Live Preview's callout widget only fully rebuilds on a type change; an
+	 * icon/colour-only edit just patches the data-callout-metadata attribute
+	 * on the existing node, which is enough for CSS custom properties (colour)
+	 * to update reactively, but not for the icon glyph, which Obsidian only
+	 * (re)draws with JS when the widget itself is rebuilt. Find the live DOM
+	 * node for this line and redraw it directly rather than wait for a
+	 * rebuild that a metadata-only edit never triggers.
+	 */
+	private refreshRenderedCallout(editor: Editor, line: number): void {
+		const view = (editor as Editor & { cm?: EditorViewLike }).cm;
+		if (!view?.domAtPos) return;
+
+		const pos = editor.posToOffset({ line, ch: 0 });
+		const result = view.domAtPos(pos);
+		if (!result) return;
+
+		const el = result.node.instanceOf(HTMLElement) ? result.node : result.node.parentElement;
+		const callout = el?.closest<HTMLElement>('.callout');
+		if (callout) this.plugin.decorateCallout(callout);
 	}
 
 	private lineFromClick(editor: Editor, click: ClickContext): number | null {

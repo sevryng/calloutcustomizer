@@ -206,21 +206,31 @@ export default class CalloutCustomizer extends Plugin {
 		const callouts = Array.from(el.querySelectorAll<HTMLElement>('.callout'));
 		if (el.hasClass('callout')) callouts.push(el);
 
-		for (const callout of callouts) {
-			const meta = callout.getAttribute('data-callout-metadata');
-			if (!meta) continue;
+		for (const callout of callouts) this.decorateCallout(callout);
+	}
 
-			const { icon, color } = parseMeta(meta);
+	/**
+	 * Apply icon and colour directly to one already-rendered callout element.
+	 * Shared by the markdown post processor (Reading view, initial render) and
+	 * CalloutService (an immediate patch right after an edit, since Live
+	 * Preview's widget only fully rebuilds on a type change - a metadata-only
+	 * edit just updates the data-callout-metadata attribute in place and never
+	 * re-triggers the icon glyph's own JS-driven render).
+	 */
+	decorateCallout(callout: HTMLElement): void {
+		const meta = callout.getAttribute('data-callout-metadata');
+		if (!meta) return;
 
-			if (color) {
-				this.styles.registerColor(color);
-				callout.style.setProperty('--callout-color', hexToCssColor(color));
-			}
+		const { icon, color } = parseMeta(meta);
 
-			if (icon && this.icons.has(icon)) {
-				const holder = callout.querySelector<HTMLElement>('.callout-icon');
-				if (holder) this.icons.renderInto(holder, icon);
-			}
+		if (color) {
+			this.styles.registerColor(color);
+			callout.style.setProperty('--callout-color', hexToCssColor(color));
+		}
+
+		if (icon && this.icons.has(icon)) {
+			const holder = callout.querySelector<HTMLElement>('.callout-icon');
+			if (holder) this.icons.renderInto(holder, icon);
 		}
 	}
 }
