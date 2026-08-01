@@ -7,6 +7,20 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.0.3] - 2026-08-01
+
+No user-facing changes.
+
+### Changed
+
+- CI now runs `npm test` as part of the lint workflow - the test suite
+  previously never gated a commit.
+- Added test coverage for `styles.ts`'s `StyleManager`, the module responsible
+  for the 1.0.1 regression that broke plugin load.
+- Fixed a stale doc comment in `styles.ts` that still described the reverted
+  constructable-stylesheet approach as current.
+- Backfilled `CHANGELOG.md` with the 1.0.1 and 1.0.2 entries that were missing.
+
 ## [1.0.2] - 2026-08-01
 
 ### Fixed
@@ -50,7 +64,8 @@ Initial release.
   so they travel with the file and survive sync and export.
 - Metadata tokens the plugin does not own are preserved unchanged.
 
-[Unreleased]: ../../compare/1.0.2...HEAD
+[Unreleased]: ../../compare/1.0.3...HEAD
+[1.0.3]: ../../compare/1.0.2...1.0.3
 [1.0.2]: ../../compare/1.0.1...1.0.2
 [1.0.1]: ../../compare/1.0.0...1.0.1
 [1.0.0]: ../../releases/tag/1.0.0
