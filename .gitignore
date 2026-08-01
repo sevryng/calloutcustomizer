@@ -23,3 +23,6 @@ data.json
 
 # Unrounded screenshot originals, kept locally so the rounding can be re-run.
 docs/images/.raw/
+
+# Local Obsidian vault for manually testing the built plugin.
+/dev-sandbox-obs/

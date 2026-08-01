@@ -9,6 +9,7 @@
 		"build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
 		"test": "node scripts/test-callout.mjs",
 		"generate:icons": "node scripts/generate-icon-data.cjs",
+		"sync:dev-vault": "node scripts/sync-dev-vault.mjs",
 		"version": "node version-bump.mjs && git add manifest.json versions.json",
 		"lint": "eslint ."
 	},
