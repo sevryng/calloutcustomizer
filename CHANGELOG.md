@@ -7,6 +7,20 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.0.4] - 2026-08-01
+
+### Fixed
+
+- Duplicate entries could appear in the "Callout type" right-click submenu if
+  `data.json` ever ended up with two custom types sharing the same id (from an
+  old build, a manual edit, or a sync merge conflict). Settings are now
+  deduped by id on load.
+
+### Changed
+
+- README: the plugin is now listed in Obsidian's community plugin directory,
+  so the "Installing" section points there instead of saying "not yet listed."
+
 ## [1.0.3] - 2026-08-01
 
 No user-facing changes.
@@ -64,7 +78,8 @@ Initial release.
   so they travel with the file and survive sync and export.
 - Metadata tokens the plugin does not own are preserved unchanged.
 
-[Unreleased]: ../../compare/1.0.3...HEAD
+[Unreleased]: ../../compare/1.0.4...HEAD
+[1.0.4]: ../../compare/1.0.3...1.0.4
 [1.0.3]: ../../compare/1.0.2...1.0.3
 [1.0.2]: ../../compare/1.0.1...1.0.2
 [1.0.1]: ../../compare/1.0.0...1.0.1
