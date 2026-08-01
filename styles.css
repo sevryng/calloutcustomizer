@@ -1,0 +1,336 @@
+/* Callout Customizer */
+
+.callout-customizer-modal {
+	width: min(760px, 92vw);
+}
+
+.callout-customizer-modal .cc-hidden {
+	display: none;
+}
+
+.callout-customizer-modal .cc-custom-type {
+	width: 140px;
+}
+
+.callout-customizer-modal .cc-preview-wrap {
+	margin-bottom: 12px;
+}
+
+/*
+ * Obsidian scopes its .callout rules to markdown containers, so a callout
+ * rendered inside a modal inherits none of them. The preview therefore styles
+ * itself from --cc-preview-color rather than relying on the app stylesheet.
+ */
+.callout-customizer-modal .cc-preview-callout {
+	margin: 0;
+	padding: 12px;
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	border: 1px solid var(--cc-preview-color, var(--background-modifier-border));
+	border-radius: var(--radius-m);
+	background: color-mix(
+		in srgb,
+		var(--cc-preview-color, transparent) 10%,
+		var(--background-primary)
+	);
+	mix-blend-mode: var(--callout-blend-mode, normal);
+}
+
+.callout-customizer-modal .cc-preview-callout .callout-title {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font-weight: var(--font-semibold);
+	color: var(--cc-preview-color, var(--text-normal));
+}
+
+.callout-customizer-modal .cc-preview-callout .callout-icon {
+	display: flex;
+	align-items: center;
+	color: var(--cc-preview-color, var(--text-normal));
+}
+
+.callout-customizer-modal .cc-preview-callout .callout-content p {
+	margin: 0;
+	color: var(--text-normal);
+}
+
+.callout-customizer-modal .cc-source {
+	margin-top: 6px;
+	padding: 6px 8px;
+	border-radius: var(--radius-s);
+	background: var(--background-secondary);
+	color: var(--text-muted);
+	font-family: var(--font-monospace);
+	font-size: var(--font-ui-smaller);
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.callout-customizer-modal .cc-form .setting-item {
+	padding: 8px 0;
+	border-top: none;
+}
+
+/* ---- colour swatches ---- */
+
+.callout-customizer-modal .cc-swatches {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	padding: 2px 0 10px;
+}
+
+.callout-customizer-modal .cc-swatch {
+	width: 26px;
+	height: 26px;
+	padding: 0;
+	border-radius: 50%;
+	border: 1px solid var(--background-modifier-border);
+	background: var(--cc-swatch-color, var(--background-modifier-border));
+	cursor: pointer;
+	box-shadow: none;
+}
+
+.callout-customizer-modal .cc-swatch:hover {
+	transform: scale(1.12);
+}
+
+.callout-customizer-modal .cc-swatch-default {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--text-muted);
+}
+
+.callout-customizer-modal .cc-swatch-default .svg-icon {
+	width: 14px;
+	height: 14px;
+}
+
+.callout-customizer-modal .cc-hex-input {
+	width: 96px;
+	font-family: var(--font-monospace);
+}
+
+/* ---- picker ---- */
+
+.callout-customizer-modal .cc-picker-head {
+	display: flex;
+	gap: 8px;
+	align-items: center;
+	margin-top: 4px;
+}
+
+.callout-customizer-modal .cc-search {
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
+.callout-customizer-modal .cc-category {
+	flex: 0 0 auto;
+	max-width: 190px;
+}
+
+.callout-customizer-modal .cc-clear-icon {
+	flex: 0 0 auto;
+	white-space: nowrap;
+}
+
+.callout-customizer-modal .cc-recents {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	flex-wrap: wrap;
+	margin-top: 8px;
+}
+
+.callout-customizer-modal .cc-recents-label {
+	font-size: var(--font-ui-smaller);
+	color: var(--text-muted);
+	margin-right: 4px;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+}
+
+.callout-customizer-modal .cc-grid {
+	display: grid;
+	gap: 4px;
+	margin-top: 10px;
+	padding: 6px;
+	max-height: 46vh;
+	overflow-y: auto;
+	border: 1px solid var(--background-modifier-border);
+	border-radius: var(--radius-m);
+	background: var(--background-primary-alt);
+}
+
+.callout-customizer-modal .cc-grid-small {
+	grid-template-columns: repeat(auto-fill, minmax(30px, 1fr));
+}
+
+.callout-customizer-modal .cc-grid-medium {
+	grid-template-columns: repeat(auto-fill, minmax(38px, 1fr));
+}
+
+.callout-customizer-modal .cc-grid-large {
+	grid-template-columns: repeat(auto-fill, minmax(48px, 1fr));
+}
+
+.callout-customizer-modal .cc-icon-btn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	aspect-ratio: 1 / 1;
+	padding: 0;
+	background: transparent;
+	border: 1px solid transparent;
+	border-radius: var(--radius-s);
+	color: var(--text-normal);
+	cursor: pointer;
+	box-shadow: none;
+}
+
+.callout-customizer-modal .cc-icon-btn:hover {
+	background: var(--background-modifier-hover);
+}
+
+.callout-customizer-modal .cc-icon-btn.is-selected {
+	border-color: var(--interactive-accent);
+	background: var(--background-modifier-hover);
+	color: var(--interactive-accent);
+}
+
+.callout-customizer-modal .cc-recents .cc-icon-btn {
+	width: 30px;
+	height: 30px;
+}
+
+.callout-customizer-modal .cc-count {
+	margin-top: 6px;
+	font-size: var(--font-ui-smaller);
+	color: var(--text-muted);
+}
+
+/* ---- footer ---- */
+
+.callout-customizer-modal .cc-footer {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-top: 14px;
+}
+
+.callout-customizer-modal .cc-footer .cc-spacer {
+	flex: 1 1 auto;
+}
+
+/* ---- prompts ---- */
+
+.cc-svg-input {
+	width: 100%;
+	min-height: 140px;
+	font-family: var(--font-monospace);
+	font-size: var(--font-ui-smaller);
+	resize: vertical;
+}
+
+.cc-footer {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-top: 14px;
+}
+
+.cc-footer .cc-spacer {
+	flex: 1 1 auto;
+}
+
+.cc-inline-icon {
+	display: inline-flex;
+	align-items: center;
+	margin-left: 6px;
+	vertical-align: -2px;
+}
+
+.cc-inline-icon svg {
+	width: 16px;
+	height: 16px;
+}
+
+.cc-svg-preview {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	margin-top: 10px;
+	padding: 10px;
+	border: 1px solid var(--background-modifier-border);
+	border-radius: var(--radius-m);
+	background: var(--background-primary-alt);
+}
+
+.cc-svg-preview-box {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex: 0 0 auto;
+	width: 44px;
+	height: 44px;
+	border-radius: var(--radius-s);
+	background: var(--background-secondary);
+	color: var(--text-accent);
+}
+
+.cc-svg-preview-box svg {
+	width: 28px;
+	height: 28px;
+}
+
+.cc-svg-status {
+	font-size: var(--font-ui-smaller);
+	color: var(--text-muted);
+	line-height: 1.4;
+}
+
+.cc-svg-status-error {
+	color: var(--text-error);
+}
+
+/* ---- save look explanation ---- */
+
+.cc-explain {
+	margin-top: 4px;
+	padding: 12px 14px;
+	border-radius: var(--radius-m);
+	border: 1px solid var(--background-modifier-border);
+	background: var(--background-primary-alt);
+	font-size: var(--font-ui-smaller);
+	color: var(--text-muted);
+}
+
+.cc-explain .cc-explain-lead {
+	margin: 0 0 8px;
+	color: var(--text-normal);
+	font-weight: var(--font-semibold);
+}
+
+.cc-explain ul {
+	margin: 0;
+	padding-left: 18px;
+	line-height: 1.6;
+}
+
+.cc-explain .cc-explain-label {
+	margin: 10px 0 4px;
+}
+
+.cc-explain .cc-explain-code {
+	margin: 0;
+	padding: 8px 10px;
+	border-radius: var(--radius-s);
+	background: var(--background-secondary);
+	font-size: var(--font-ui-smaller);
+	white-space: pre-wrap;
+	word-break: break-all;
+}

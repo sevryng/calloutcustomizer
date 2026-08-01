@@ -1,0 +1,12 @@
+# Normalize everything to LF in the repository, matching .editorconfig.
+# Without this, a Windows checkout reports every template file as modified.
+* text=auto eol=lf
+
+# Generated: keep it out of diffs and language stats.
+src/utils/icon-data.ts linguist-generated=true -diff
+
+package-lock.json -diff linguist-generated=true
+
+*.png binary
+*.jpg binary
+*.gif binary

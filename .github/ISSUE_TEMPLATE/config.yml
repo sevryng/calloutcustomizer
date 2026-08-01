@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+    - name: Obsidian callout documentation
+      url: https://help.obsidian.md/callouts
+      about: How callouts and their metadata work in Obsidian itself.
+    - name: Support the plugin
+      url: https://buymeacoffee.com/sevryn
+      about: Keep this and the other free tools maintained.

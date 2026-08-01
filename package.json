@@ -1,0 +1,46 @@
+{
+	"name": "obsidian-callout-customizer",
+	"version": "1.0.0",
+	"description": "Right-click any callout in Obsidian to change its Lucide icon, color, title and fold state.",
+	"main": "main.js",
+	"type": "module",
+	"scripts": {
+		"dev": "node esbuild.config.mjs",
+		"build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
+		"test": "node scripts/test-callout.mjs",
+		"generate:icons": "node scripts/generate-icon-data.cjs",
+		"version": "node version-bump.mjs && git add manifest.json versions.json",
+		"lint": "eslint ."
+	},
+	"keywords": [
+		"obsidian",
+		"obsidian-plugin",
+		"callouts",
+		"lucide",
+		"icons"
+	],
+	"author": "Sevryn Gott (https://sevryn.ai)",
+	"license": "0-BSD",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/sevryng/calloutcustomizer.git"
+	},
+	"bugs": {
+		"url": "https://github.com/sevryng/calloutcustomizer/issues"
+	},
+	"homepage": "https://github.com/sevryng/calloutcustomizer#readme",
+	"funding": "https://buymeacoffee.com/sevryn",
+	"devDependencies": {
+		"@eslint/js": "^9.39.4",
+		"@types/node": "^22.15.17",
+		"esbuild": "0.25.5",
+		"eslint": "^9.39.4",
+		"eslint-plugin-obsidianmd": "^0.4.0",
+		"globals": "^17.6.0",
+		"jiti": "^2.6.1",
+		"lucide-static": "^1.28.0",
+		"obsidian": "latest",
+		"typescript": "^5.8.3",
+		"typescript-eslint": "^8.59.1"
+	}
+}

@@ -1,0 +1,79 @@
+name: Bug report
+description: Something isn't working the way it should
+labels: ['bug']
+body:
+    - type: markdown
+      attributes:
+          value: |
+              Before filing: try disabling other plugins and switching to the default
+              theme. Callout styling is a crowded space and conflicts are common.
+
+    - type: textarea
+      id: what-happened
+      attributes:
+          label: What happened
+          description: What did you expect, and what happened instead?
+      validations:
+          required: true
+
+    - type: textarea
+      id: steps
+      attributes:
+          label: Steps to reproduce
+          placeholder: |
+              1. Right-click a callout in Live Preview
+              2. Choose Customize callout…
+              3. ...
+      validations:
+          required: true
+
+    - type: textarea
+      id: callout-source
+      attributes:
+          label: The callout source
+          description: The raw markdown of the callout, including the metadata after the `|`.
+          render: markdown
+          placeholder: '> [!note|i:star c:e41bde] Title'
+
+    - type: input
+      id: obsidian-version
+      attributes:
+          label: Obsidian version
+          description: Settings → About → Current version
+      validations:
+          required: true
+
+    - type: input
+      id: plugin-version
+      attributes:
+          label: Plugin version
+      validations:
+          required: true
+
+    - type: dropdown
+      id: platform
+      attributes:
+          label: Platform
+          multiple: true
+          options:
+              - Windows
+              - macOS
+              - Linux
+              - iOS
+              - Android
+      validations:
+          required: true
+
+    - type: input
+      id: theme
+      attributes:
+          label: Theme
+          description: Which theme, or "default".
+
+    - type: checkboxes
+      id: checks
+      attributes:
+          label: Checks
+          options:
+              - label: I reproduced this with other plugins disabled
+              - label: I reproduced this with the default theme
