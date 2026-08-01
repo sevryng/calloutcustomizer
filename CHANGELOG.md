@@ -7,6 +7,21 @@ project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.0.2] - 2026-08-01
+
+### Fixed
+
+- Plugin failing to load: replaced constructable stylesheet injection with an
+  injected `<style>` element, and reordered startup so the settings tab and
+  context menu register before the fallible icon and style setup - a failure
+  there can no longer take the whole plugin down.
+
+## [1.0.1] - 2026-08-01
+
+### Fixed
+
+- Point `authorUrl` at the GitHub profile.
+
 ## [1.0.0] - 2026-08-01
 
 Initial release.
@@ -35,5 +50,7 @@ Initial release.
   so they travel with the file and survive sync and export.
 - Metadata tokens the plugin does not own are preserved unchanged.
 
-[Unreleased]: ../../compare/1.0.0...HEAD
+[Unreleased]: ../../compare/1.0.2...HEAD
+[1.0.2]: ../../compare/1.0.1...1.0.2
+[1.0.1]: ../../compare/1.0.0...1.0.1
 [1.0.0]: ../../releases/tag/1.0.0
