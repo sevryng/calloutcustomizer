@@ -5,7 +5,7 @@
 	"minAppVersion": "1.5.0",
 	"description": "Right-click any callout to change its Lucide icon, color, title and fold state. Settings are stored inline in the note.",
 	"author": "Sevryn Gott",
-	"authorUrl": "https://sevryn.ai",
+	"authorUrl": "https://github.com/sevryng",
 	"fundingUrl": "https://ko-fi.com/sevryn",
 	"isDesktopOnly": false
 }
