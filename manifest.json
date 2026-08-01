@@ -1,7 +1,7 @@
 {
 	"id": "callout-customizer",
 	"name": "Callout Customizer",
-	"version": "1.0.3",
+	"version": "1.0.4",
 	"minAppVersion": "1.5.0",
 	"description": "Right-click any callout to change its Lucide icon, color, title and fold state. Settings are stored inline in the note.",
 	"author": "Sevryn Gott",
