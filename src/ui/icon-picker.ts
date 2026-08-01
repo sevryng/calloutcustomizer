@@ -103,7 +103,7 @@ export class IconPicker {
 	setSelected(name: string): void {
 		this.selected = name;
 		for (const child of Array.from(this.grid.children)) {
-			if (child instanceof HTMLElement) {
+			if (child.instanceOf(HTMLElement)) {
 				child.toggleClass('is-selected', child.dataset.icon === name);
 			}
 		}

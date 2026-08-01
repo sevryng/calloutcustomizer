@@ -266,7 +266,7 @@ export class SaveLookModal extends Modal {
 				]
 			: [
 					`Becomes a real callout type you write as > [!${slug}].`,
-					'Written to .obsidian/snippets/callout-customizer.css.',
+					`Written to ${this.app.vault.configDir}/snippets/callout-customizer.css.`,
 					'Every callout of this type updates when you change it.',
 					'Keeps working even if this plugin is disabled.',
 					'Requires the CSS snippet to be enabled.',

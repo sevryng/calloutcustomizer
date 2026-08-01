@@ -54,7 +54,7 @@ export class CalloutCustomizerSettingTab extends PluginSettingTab {
 		new Setting(containerEl)
 			.setName('Add item to the right-click menu')
 			.setDesc(
-				'Adds "Customize callout…" to the editor context menu when you right-click inside a callout.',
+				'Adds a customize option to the editor context menu when you right-click inside a callout.',
 			)
 			.addToggle((toggle) =>
 				toggle
@@ -149,9 +149,10 @@ export class CalloutCustomizerSettingTab extends PluginSettingTab {
 					.setButtonText('Add icon')
 					.setCta()
 					.onClick(() => {
-						new SvgImportModal(this.app, async (result) => {
-							await this.plugin.addCustomIcon(result);
-							this.display();
+						new SvgImportModal(this.app, (result) => {
+							void this.plugin.addCustomIcon(result).then(() => {
+								this.display();
+							});
 						}).open();
 					}),
 			);

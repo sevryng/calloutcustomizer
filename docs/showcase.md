@@ -74,29 +74,20 @@ Nesting works, and each level keeps its own styling.
 
 ## 5. Saved callout types
 
-These need the CSS snippet enabled. Save a look via **Save look… → Callout
-type**, then use it anywhere with no metadata at all.
+Save a look via **Save look… → Callout type**, then use it anywhere with no
+metadata at all. Requires the CSS snippet to be enabled.
 
-**Render:**
-> [!corgi|i:svg-corgi c:a882ff] Corgi Approved!
-> A saved type. The markdown is just `> [!corgi]`. The icon and color live
-> in `.obsidian/snippets/callout-customizer.css`, so this keeps working even
-> with the plugin disabled.
+> [!corgi] Corgi Approved!
+> There is no icon or colour in this note. The markdown is literally just
+> `> [!corgi]` — both live in the generated CSS snippet, so this keeps working
+> even with the plugin disabled.
 
-**Markdown**:
+The entire source for the callout above:
+
+```markdown
+> [!corgi] Corgi Approved!
+> There is no icon or colour in this note.
 ```
-
- > [!corgi|i:svg-corgi c:a882ff] Corgi Approved!
-> A saved type. The markdown is just `> [!corgi]`. The icon and color live
-> in `.obsidian/snippets/callout-customizer.css`, so this keeps working even
-> with the plugin disabled.
-
-```
-
-
-
-> [!zoomies] Ship it
-> Another saved type.
 
 ---
 

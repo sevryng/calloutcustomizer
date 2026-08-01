@@ -36,9 +36,18 @@ def theme_of(path: pathlib.Path) -> str:
     return "dark" if path.stem.endswith("-dark") else "light"
 
 
+def is_already_rounded(path: pathlib.Path) -> bool:
+    """A rounded image has a fully transparent top-left corner."""
+    with Image.open(path) as im:
+        return im.convert("RGBA").getpixel((0, 0))[3] == 0
+
+
 def round_image(path: pathlib.Path) -> None:
     backup = RAW / path.name
-    if not backup.exists():
+
+    # A replaced screenshot is still opaque, so it becomes the new original.
+    # Without this check, re-running would restore the stale backup over it.
+    if not backup.exists() or not is_already_rounded(path):
         shutil.copy2(path, backup)
 
     source = Image.open(backup).convert("RGBA")

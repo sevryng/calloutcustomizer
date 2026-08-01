@@ -90,7 +90,9 @@ export function sanitizeSvg(input: string, options: SanitizeOptions = {}): strin
  * with `<svg` rejects most `.svg` files on disk.
  */
 function extractSvgElement(input: string): string {
-	const text = input.replace(/^﻿/, '').trim();
+	// \uFEFF is a byte-order mark. Written as an escape: a literal BOM here is
+	// invisible in an editor and ESLint rejects it as irregular whitespace.
+	const text = input.replace(/^\uFEFF/, '').trim();
 	if (!text) throw new SvgError('Nothing to import - paste some SVG markup first.');
 
 	const start = text.search(/<svg[\s>]/i);

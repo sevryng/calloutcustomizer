@@ -115,7 +115,7 @@ export class CustomizerModal extends Modal {
 
 		setting.addText((text) => {
 			customField = text;
-			text.setPlaceholder('my-callout')
+			text.setPlaceholder('My type')
 				.setValue(isBuiltin ? '' : this.state.type)
 				.onChange((value) => {
 					this.state.type = normalizeType(value);
@@ -172,7 +172,7 @@ export class CustomizerModal extends Modal {
 
 		setting.addText((text) => {
 			this.hexInput = text;
-			text.setPlaceholder('default')
+			text.setPlaceholder('Default')
 				.setValue(this.state.color ? `#${this.state.color}` : '')
 				.onChange((value) => {
 					const hex = normalizeHex(value);

@@ -31,9 +31,8 @@ export class StyleManager {
 		const existing = activeDocument.getElementById(STYLE_EL_ID);
 		if (existing) existing.remove();
 
-		const styleEl = activeDocument.createElement('style');
+		const styleEl = activeDocument.head.createEl('style');
 		styleEl.id = STYLE_EL_ID;
-		activeDocument.head.appendChild(styleEl);
 		this.styleEl = styleEl;
 
 		this.baseRules = icons.names

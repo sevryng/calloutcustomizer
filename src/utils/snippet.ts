@@ -74,7 +74,7 @@ export class SnippetWriter {
 
 		if (typeof customCss?.setCssEnabledStatus !== 'function') {
 			new Notice(
-				'Could not enable the snippet automatically. Turn on "callout-customizer" in Settings → Appearance → CSS snippets.',
+				'Could not enable the snippet automatically. Turn it on under appearance settings, in the CSS snippets section.',
 				10_000,
 			);
 			return false;
