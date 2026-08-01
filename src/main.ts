@@ -35,16 +35,13 @@ export default class CalloutCustomizer extends Plugin {
 		await this.loadSettings();
 
 		this.snippets = new SnippetWriter(this.app);
-
 		this.icons = new IconIndex();
-		this.icons.build(await this.loadCategoryOverride(), this.settings.customIcons);
-
 		this.styles = new StyleManager();
-		this.styles.onNewColor = (hex) => void this.rememberColor(hex);
-		this.styles.load(this.icons, this.settings.usedColors);
-
 		this.calloutService = new CalloutService(this);
 
+		// Register UI before anything that can throw: a failure in icon or
+		// style setup should cost styling, not the settings tab and menus.
+		this.addSettingTab(new CalloutCustomizerSettingTab(this.app, this));
 		registerContextMenu(this);
 		registerCommands(this);
 
@@ -52,7 +49,17 @@ export default class CalloutCustomizer extends Plugin {
 		// directly there rather than relying solely on the generated stylesheet.
 		this.registerMarkdownPostProcessor((el) => this.decorateCallouts(el));
 
-		this.addSettingTab(new CalloutCustomizerSettingTab(this.app, this));
+		try {
+			this.icons.build(
+				await this.loadCategoryOverride(),
+				this.settings.customIcons,
+			);
+			this.styles.onNewColor = (hex) => void this.rememberColor(hex);
+			this.styles.load(this.icons, this.settings.usedColors);
+		} catch (err) {
+			console.error('Callout Customizer: style setup failed', err);
+			new Notice('Callout Customizer: styling failed to load - see console.');
+		}
 	}
 
 	onunload(): void {

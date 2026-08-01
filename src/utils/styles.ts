@@ -19,7 +19,7 @@ import { hexToCssColor, normalizeHex } from './colors';
 import { svgToCssValue } from './svg';
 
 export class StyleManager {
-	private sheet: CSSStyleSheet | null = null;
+	private el: HTMLStyleElement | null = null;
 	private baseRules = '';
 	private colorRules = new Map<string, string>();
 
@@ -33,11 +33,9 @@ export class StyleManager {
 	load(icons: IconIndex, knownColors: readonly string[]): void {
 		this.detach();
 
-		this.sheet = new CSSStyleSheet();
-		activeDocument.adoptedStyleSheets = [
-			...activeDocument.adoptedStyleSheets,
-			this.sheet,
-		];
+		this.el = activeDocument.createElement('style');
+		this.el.id = 'callout-customizer-styles';
+		activeDocument.head.appendChild(this.el);
 
 		this.baseRules = icons.names
 			.map((name) => {
@@ -59,13 +57,8 @@ export class StyleManager {
 	}
 
 	private detach(): void {
-		if (!this.sheet) return;
-
-		const sheet = this.sheet;
-		activeDocument.adoptedStyleSheets = activeDocument.adoptedStyleSheets.filter(
-			(candidate) => candidate !== sheet,
-		);
-		this.sheet = null;
+		this.el?.remove();
+		this.el = null;
 	}
 
 	/**
@@ -90,9 +83,7 @@ export class StyleManager {
 	}
 
 	private flush(): void {
-		if (!this.sheet) return;
-		this.sheet.replaceSync(
-			[this.baseRules, ...this.colorRules.values()].join('\n'),
-		);
+		if (!this.el) return;
+		this.el.textContent = [this.baseRules, ...this.colorRules.values()].join('\n');
 	}
 }
