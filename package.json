@@ -1,6 +1,6 @@
 {
 	"name": "obsidian-callout-customizer",
-	"version": "1.0.4",
+	"version": "1.0.5",
 	"description": "Right-click any callout in Obsidian to change its Lucide icon, color, title and fold state.",
 	"main": "main.js",
 	"type": "module",
